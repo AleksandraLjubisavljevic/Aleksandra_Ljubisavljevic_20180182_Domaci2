@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductTestController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\UserProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,16 @@ Route::resource('products', App\Http\Controllers\ProductController::class);
 
 //Route::get('users/{id}/products',[UserProductController::class, 'index'])->name('users.products.index');
 Route::resource('users.products', UserProductController::class)->only(['index']);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
+    });
+
+    Route::resource('products', App\Http\Controllers\ProductController::class)->only(['update', 'store', 'destroy']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+Route::resource('products', App\Http\Controllers\ProductController::class)->only(['index']);

@@ -10,12 +10,7 @@ use Illuminate\Http\Request;
 
 class ProductTestController extends Controller
 {
-  /* public function index()
-    {
-        roducts = Product::all();
-
-        return $products;
-    }*/
+  
 
     public function index()
     {
