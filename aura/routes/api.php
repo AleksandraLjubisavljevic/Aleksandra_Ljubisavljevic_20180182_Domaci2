@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductTestController;
+use App\Http\Controllers\UserProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');;
+Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+
+//Route::get('products/{id}',[ProductTestController::class, 'show']);
+//Route::get('products',[ProductTestController::class, 'index']);
+
+Route::resource('products', App\Http\Controllers\ProductController::class);
+
+//Route::get('users/{id}/products',[UserProductController::class, 'index'])->name('users.products.index');
+Route::resource('users.products', UserProductController::class)->only(['index']);
